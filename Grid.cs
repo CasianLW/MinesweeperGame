@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace MinesweeperGame
 {
@@ -36,21 +37,63 @@ namespace MinesweeperGame
             CalculateAdjacentMines();
         }
 
+
+
         // Affiche la grille actuelle à l'utilisateur
         public void Display(bool gameOver = false)
         {
-            // Affichez chaque cellule de la grille
+            StringBuilder display = new StringBuilder();
+
+            // Add the column headers with padding for double-digit numbers
+            display.Append("   "); // Adjust the spacing based on your index column size
+            for (int i = 0; i < _columns; i++)
+            {
+                display.AppendFormat("{0,2} ", i); // {0,2} formats the number with a fixed width of 2
+            }
+            display.AppendLine();
+
+            // Add the row separator, adjust the number of dashes based on your grid width
+            display.Append("  ");
+            display.Append('-', 3 * _columns); // Assumes 3 characters per grid cell
+            display.AppendLine();
+
+            // Add each row of the grid
             for (int i = 0; i < _rows; i++)
             {
+                // Add the row number with padding for double-digit numbers
+                display.AppendFormat("{0,2}|", i);
+
                 for (int j = 0; j < _columns; j++)
                 {
-                    _cells[i, j].Display(gameOver);
+                    // Use the updated Display method of Cell
+                    _cells[i, j].Display(display, gameOver);
                 }
-                Console.WriteLine();  // nouvelle ligne pour chaque rangée
+
+                // Start a new line at the end of each row
+                display.AppendLine();
             }
+
+            // Print the whole grid
+            Console.Write(display.ToString());
         }
 
-       
+
+        //old version, grid directlly in console
+        // Affiche la grille actuelle à l'utilisateur
+        //public void Display(bool gameOver = false)
+        //{
+        //    // Affichez chaque cellule de la grille
+        //    for (int i = 0; i < _rows; i++)
+        //    {
+        //        for (int j = 0; j < _columns; j++)
+        //        {
+        //            _cells[i, j].Display(gameOver);
+        //        }
+        //        Console.WriteLine();  // nouvelle ligne pour chaque rangée
+        //    }
+        //}
+
+
         /// <summary>
         /// Recuperer la difficulté choisise en MainProgram
         /// </summary>

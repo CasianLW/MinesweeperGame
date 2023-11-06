@@ -1,4 +1,6 @@
-﻿namespace MinesweeperGame
+﻿using System.Text;
+
+namespace MinesweeperGame
 {
     public class Cell
     {
@@ -42,37 +44,68 @@
             }
         }
 
-        // Affiche l'état actuel de la cellule.
-        public void Display(bool gameOver = false)
+
+        // This version of Display will append the cell's display character to a StringBuilder.
+        public void Display(StringBuilder display, bool gameOver = false)
         {
             if (IsRevealed || (gameOver && IsMine))
             {
                 if (IsMine)
                 {
-                    //Console.Write("💣");
-                    Console.Write("M");
-
+                    display.Append(" M ");
                 }
                 else
                 {
-                    Console.Write(AdjacentMines > 0 ? AdjacentMines.ToString() : " ");
+                    display.AppendFormat(" {0} ", AdjacentMines > 0 ? AdjacentMines.ToString() : " "); // Pad the number
                 }
             }
             else
             {
                 if (IsFlagged)
                 {
-                    //Console.Write("🚩");
-                    Console.Write("F");
-
+                    display.Append(" F ");
                 }
                 else
                 {
-                    //Console.Write("⬛");
-                    Console.Write("X");
-
+                    display.Append(" X ");
                 }
             }
+            //display.Append(" "); // Append a space to keep the grid aligned
+        }
+
+
+        //old display, grid directlly inside console
+        // Affiche l'état actuel de la cellule.
+        //    public void Display(bool gameOver = false)
+        //    {
+        //        if (IsRevealed || (gameOver && IsMine))
+        //        {
+        //            if (IsMine)
+        //            {
+        //                //Console.Write("💣");
+        //                Console.Write("M");
+
+        //            }
+        //            else
+        //            {
+        //                Console.Write(AdjacentMines > 0 ? AdjacentMines.ToString() : " ");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (IsFlagged)
+        //            {
+        //                //Console.Write("🚩");
+        //                Console.Write("F");
+
+        //            }
+        //            else
+        //            {
+        //                //Console.Write("⬛");
+        //                Console.Write("X");
+
+        //            }
+        //        }
+        //    }
         }
     }
-}
